@@ -1,0 +1,483 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://localhost/'
+  - url: 'https://localhost/'
+security:
+  - bearerAuth: []
+info:
+  version: v1
+  title: wecard
+  description: A wecard API based on Swagger and built using Node.js
+paths:
+  /user:
+    get:
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/User'
+  /namecard:
+    get:
+      tags:
+        - Namecard
+      summary: Get all Namecards of current user
+      operationId: namecard_get
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Namecard'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Namecard'
+      deprecated: false
+    post:
+      tags:
+        - Namecard
+      summary: Create a Namecard
+      operationId: namecard_create
+      requestBody:
+        $ref: '#/components/requestBodies/Namecard'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Namecard'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Namecard'
+      deprecated: false
+    put:
+      tags:
+        - Namecard
+      summary: Update the Namecard
+      operationId: namecard_update
+      requestBody:
+        $ref: '#/components/requestBodies/Namecard'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Namecard'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Namecard'
+      deprecated: false
+    delete:
+      tags:
+        - Namecard
+      summary: Delete the Namecard
+      operationId: namecard_delete
+      requestBody:
+        $ref: '#/components/requestBodies/Namecard'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Namecard'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Namecard'
+      deprecated: false
+  '/namecard/{id}':
+    get:
+      tags:
+        - Namecard
+      summary: Get the Namecard with the id
+      operationId: namecard_getById
+      parameters:
+        - name: id
+          in: path
+          description: The Namecard id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Namecard'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Namecard'
+      deprecated: false
+    delete:
+      tags:
+        - Namecard
+      summary: Delete the Namecard with the id
+      operationId: namecard_deleteById
+      parameters:
+        - name: id
+          in: path
+          description: The Namecard id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Namecard'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Namecard'
+      deprecated: false
+  '/cardcase/{id}':
+    get:
+      tags:
+        - Cardcase
+      summary: Get the Cardcase with the id
+      operationId: cardcase_getById
+      parameters:
+        - name: id
+          in: path
+          description: The Cardcase id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cardcase'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Cardcase'
+  '/cardcase/{id}/item':
+    get:
+      tags:
+        - Cardcase
+      summary: Get all CardcaseItem belonging to the Cardcase with the id
+      operationId: cardcaseitem_get
+      parameters:
+        - name: id
+          in: path
+          description: The Cardcase id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CardcaseItem'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CardcaseItem'
+    post:
+      tags:
+        - Cardcase
+      summary: Create a CardcaseItem in Cardcase with the Id
+      operationId: cardcaseitem_create
+      parameters:
+        - name: id
+          in: path
+          description: The CardcaseItem id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/CardcaseItem'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardcaseItem'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CardcaseItem'
+  '/cardcase/item/{id}':
+    delete:
+      tags:
+        - Cardcase
+      summary: Delete the CardcaseItem with id
+      operationId: cardcase_item_deleteById
+      parameters:
+        - name: id
+          in: path
+          description: The CardcaseItem id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardcaseItem'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CardcaseItem'
+  /group:
+    get:
+      tags:
+        - Group
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+  '/group/{id}/member':
+    get:
+      tags:
+        - Group
+      summary: Get all GroupMember belonging to the Group with the Id
+      operationId: groupmemeber_get
+      parameters:
+        - name: id
+          in: path
+          description: The Group id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupMember'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupMember'
+  /accessrequest:
+    get:
+      tags:
+        - AccessRequest
+      summary: Get all AccessRequest sent to current user
+      operationId: accessreqeust_get
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccessRequest'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccessRequest'
+      deprecated: false
+    put:
+      tags:
+        - AccessRequest
+      summary: Update an AccessRequest
+      operationId: accessreqeust_update
+      requestBody:
+        $ref: '#/components/requestBodies/AccessRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequest'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequest'
+      deprecated: false
+  '/accesslevel/{card_id}':
+    get:
+      tags:
+        - AccessLevel
+      summary: Get Access of the specified id
+      operationId: access_getByCardId
+      parameters:
+        - name: card_id
+          in: path
+          description: The card Id to be accessed
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessLevel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AccessLevel'
+      deprecated: false
+  /accesslevel:
+    post:
+      tags:
+        - AccessLevel
+      summary: Create an AccessLevle
+      operationId: access_create
+      requestBody:
+        $ref: '#/components/requestBodies/AccessLevel'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessLevel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AccessLevel'
+      deprecated: false
+    put:
+      tags:
+        - AccessLevel
+      summary: Update an Access
+      operationId: access_update
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessLevel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AccessLevel'
+      deprecated: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessLevel'
+        description: The AccessLevel to be updated
+        required: true
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+    Namecard:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+    Group:
+      type: object
+      properties:
+        id:
+          type: string
+    GroupMember:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+    Cardcase:
+      type: object
+      properties:
+        id:
+          type: string
+    CardcaseItem:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        cardcase_id:
+          type: string
+    AccessLevel:
+      type: object
+      properties:
+        id:
+          type: string
+        RequestUserId:
+          type: string
+        TargetUserId:
+          type: string
+        Level:
+          type: integer
+    AccessRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        RequestUserId:
+          type: string
+        TargetUserId:
+          type: string
+  requestBodies:
+    Namecard:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Namecard'
+        description: The Namecard to be updated
+        required: true
+    CardcaseItem:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardcaseItem'
+        description: The Cardcase to be created
+        required: true
+    AccessRequest:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRequest'
+        required: true
+    AccessLevel:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessLevel'
+        description: The AccessLevel to be updated
+        required: true
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+        #bearerFormat: JWT

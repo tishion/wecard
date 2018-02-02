@@ -1,0 +1,639 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: wecard
+  description: The wecard APIs based on Swagger and built using Node.js
+host: api.wecard.com
+schemes:
+  - http
+  - https
+basePath: /api
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+security:
+  - Bearer: []
+consumes:
+  - application/json
+  - text/json
+produces:
+  - application/json, text/json
+  - application/json
+  - text/json
+paths:
+  /security/auth:
+    get:
+      security: []
+      tags:
+        - Security
+      summary: Authenticate with WX login code
+      operationId: security_auth
+      parameters:
+        - name: WX-LOGIN-CODE
+          in: header
+          description: The WX login code
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserInfo'
+  /security/wxacodeimage:
+    get:
+      tags:
+        - Security
+      summary: Get WX application QR code image
+      operationId: security_getWxQRCodeImage
+      produces:
+        - image/jpeg, application/json, text/json
+        - image/jpeg
+        - application/json
+        - text/json
+      parameters:
+        - name: scene
+          in: query
+          description: The scene
+          required: true
+          type: string
+        - name: page
+          in: query
+          description: The page
+          type: string
+        - name: width
+          in: query
+          description: The width
+          type: integer
+      responses:
+        '200':
+          description: QR code image
+          schema:
+            type: file
+  /namecard:
+    get:
+      tags:
+        - Namecard
+      summary: Get all Namecards of current User
+      operationId: namecard_getByCurrentUserId
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Namecard'
+    post:
+      tags:
+        - Namecard
+      summary: Create a Namecard
+      operationId: namecard_create
+      parameters:
+        - $ref: '#/parameters/NamecardCreate'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Namecard'
+    put:
+      tags:
+        - Namecard
+      summary: Update the Namecard
+      operationId: namecard_update
+      parameters:
+        - $ref: '#/parameters/NamecardUpdate'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Namecard'
+  '/namecard/{id}':
+    get:
+      tags:
+        - Namecard
+      summary: Get the Namecard by id
+      operationId: namecard_getById
+      parameters:
+        - $ref: '#/parameters/EntityId'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Namecard'
+    delete:
+      tags:
+        - Namecard
+      summary: Delete the Namecard by id
+      operationId: namecard_deleteById
+      parameters:
+        - $ref: '#/parameters/EntityId'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Namecard'
+  '/namecard/{id}/avatar':
+    post:
+      tags:
+        - Namecard
+      summary: Create/Update the Namecard avatar
+      operationId: namecard_setAvatar
+      consumes:
+        - multipart/form-data
+      parameters:
+        - $ref: '#/parameters/EntityId'
+        - name: avatar
+          in: formData
+          type: file
+          description: The file to upload.
+      responses:
+        '200':
+          description: OK
+  /cardcase:
+    get:
+      tags:
+        - Cardcase
+      summary: Get all Cardcases of current User
+      operationId: cardcase_getByCurrentUserId
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Cardcase'
+  /cardcaseItem:
+    get:
+      tags:
+        - CardcaseItem
+      summary: Get all CardcaseItems by Cardcase id
+      operationId: cardcaseItem_getByCardcaseId
+      parameters:
+        - name: cardcaseId
+          type: string
+          in: query
+          required: true
+          description: The Cardcase id
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CardcaseItem'
+    post:
+      tags:
+        - CardcaseItem
+      summary: Create a CardcaseItem in Cardcase
+      operationId: cardcaseItem_create
+      parameters:
+        - $ref: '#/parameters/CardcaseItemCreate'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CardcaseItem'
+  '/cardcaseItem/{id}':
+    delete:
+      tags:
+        - CardcaseItem
+      summary: Delete the CardcaseItem by id
+      operationId: cardcaseItem_deleteById
+      parameters:
+        - $ref: '#/parameters/EntityId'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CardcaseItem'
+  /group:
+    get:
+      tags:
+        - Group
+      summary: Get group by WX open group id
+      operationId: group_getByWXOpenGid
+      parameters:
+        - name: wxGroupId
+          type: string
+          in: query
+          required: true
+          description: The WX open group id
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Group'
+    put:
+      tags:
+        - Group
+      summary: Update group
+      operationId: group_update
+      parameters:
+        - $ref: '#/parameters/GroupUpdate'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Group'
+  '/group/{id}':
+    get:
+      tags:
+        - Group
+      summary: Get the Group by id
+      operationId: group_getById
+      parameters:
+        - $ref: '#/parameters/EntityId'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Group'
+  /group/join:
+    post:
+      tags:
+        - Group
+      summary: Notify the server that the user has shared data to the group
+      operationId: group_create
+      parameters:
+        - name: wxGroupId
+          type: string
+          in: query
+          required: true
+          description: The WX open group id
+        - name: namecardId
+          type: string
+          in: query
+          required: true
+          description: The id of the namecard to be displayed in the group
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Group'
+  /groupMember:
+    get:
+      tags:
+        - GroupMember
+      summary: Get all GroupMembers by Group id
+      operationId: groupMemeber_getbyGroupId
+      parameters:
+        - name: groupId
+          type: string
+          in: query
+          required: false
+          description: The Group id
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GroupMember'
+    put:
+      tags:
+        - GroupMember
+      summary: Update self group member info
+      operationId: groupMemeber_updateSelfInfo
+      parameters:
+        - $ref: '#/parameters/GroupMemberUpdate'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GroupMember'
+  /accessrequest:
+    get:
+      tags:
+        - AccessRequest
+      summary: Get all AccessRequest sent to current user
+      operationId: accessreqeust_get
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AccessRequest'
+    post:
+      tags:
+        - AccessRequest
+      summary: Create an AccessRequest
+      operationId: accessreqeust_create
+      parameters:
+        - $ref: '#/parameters/AccessRequestCreate'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AccessRequest'
+  '/accessrequest/{id}/sign':
+    put:
+      tags:
+        - AccessRequest
+      summary: Accept or refuse the AccessRequest by id
+      operationId: accessRequest_signeById
+      parameters:
+        - $ref: '#/parameters/EntityId'
+        - name: operation
+          in: query
+          description: The operation to be performed (accept|reject)
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AccessRequest'
+  /develop/wxaccesstoken:
+    get:
+      security: []
+      tags:
+        - Development
+      summary: Get WX access token
+      operationId: develop_getWxAccessToken
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/WxAccessToken'
+  /develop/generatemockdata:
+    get:
+      security: []
+      tags:
+        - Development
+      summary: Generate mock data
+      operationId: develop_generateMockData
+      responses:
+        '200':
+          description: OK
+  /develop/cleangroup:
+    get:
+      security: []
+      tags:
+        - Development
+      summary: Clean Group & GroupMember tables
+      operationId: develop_cleanGroup
+      responses:
+        '200':
+          description: OK
+  /develop/cleancardcaseitem:
+    get:
+      security: []
+      tags:
+        - Development
+      summary: Clean cardcaseItem table
+      operationId: develop_cleanCardcaseItem
+      responses:
+        '200':
+          description: OK
+  /develop/resetdatabase:
+    get:
+      security: []
+      tags:
+        - Development
+      summary: Reset database
+      operationId: develop_resetDatabase
+      responses:
+        '200':
+          description: OK
+  /develop/refreshaccesstoken:
+    get:
+      security: []
+      tags:
+        - Development
+      summary: Refresh WX access token
+      operationId: develop_refreshAccessToken
+      responses:
+        '200':
+          description: OK
+
+definitions:
+  UserInfo:
+    type: object
+    properties:
+      id:
+        type: string
+      wxOpenId:
+        type: string
+      cardcaseId:
+        type: string
+      token:
+        type: string
+      sessionKey:
+        type: string
+  WxAccessToken:
+    type: object
+    properties:
+      token:
+        type: string
+      expires_at:
+        type: string
+  Namecard:
+    type: object
+    properties:
+      id:
+        type: string
+      cardType:
+        type: string
+      userId:
+        type: string
+      avatarUri:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      residence:
+        type: string
+      hometown:
+        type: string
+      company:
+        type: string
+      department:
+        type: string
+      occupation:
+        type: string
+      school:
+        type: string
+      major:
+        type: string
+      grade:
+        type: integer
+      exCompany:
+        type: string
+      exDepartment:
+        type: string
+      exOccupation:
+        type: string
+      nonpublic:
+        type: boolean
+      interests:
+        type: array
+        items:
+          type: string 
+  Cardcase:
+    type: object
+    properties:
+      id:
+        type: string
+      userId:
+        type: string
+  CardcaseItem:
+    type: object
+    properties:
+      id:
+        type: string
+      userId:
+        type: string
+      itemId:
+        type: string
+      itemType:
+        type: string
+      cardcaseId:
+        type: string
+      name:
+        type: string
+      thumbnail:
+        type: string
+  Group:
+    type: object
+    properties:
+      id:
+        type: string
+      wxGroupId:
+        type: string
+      name:
+        type: string
+  GroupMember:
+    type: object
+    properties:
+      id:
+        type: string
+      groupId:
+        type: string
+      userId:
+        type: string
+      cardId:
+        type: string
+      hidden:
+        type: boolean
+  AccessRequest:
+    type: object
+    properties:
+      id:
+        type: string
+      toNamecardId:
+        type: string
+      toUserId:
+        type: string
+      toUserName:
+        type: string
+      fromUserId:
+        type: string
+      fromNamecardId:
+        type: string
+      fromUserName:
+        type: string
+      status:
+        type: string
+parameters:
+  EntityId:
+    required: true
+    name: id
+    type: string
+    in: path
+    description: The entity id
+  WxApiName:
+    required: true
+    name: name
+    type: string
+    in: path
+    description: The API name
+  WxApiOption:
+    required: true
+    name: body
+    in: body
+    description: The API option
+    schema:
+      type: object
+  NamecardCreate:
+    required: true
+    name: body
+    in: body
+    description: The Namecard
+    schema:
+      allOf:
+        - $ref: '#/definitions/Namecard'
+      required:
+        - cardType
+        - name
+        - phone
+        - occupation
+        - grade
+  NamecardUpdate:
+    name: body
+    in: body
+    required: true
+    description: The Namecard
+    schema:
+      allOf:
+        - $ref: '#/definitions/Namecard'
+      required:
+        - id
+  CardcaseItemCreate:
+    name: body
+    in: body
+    required: true
+    description: The Cardcase
+    schema:
+      type: object
+      properties:
+        itemId:
+          type: string
+        itemType:
+          type: string
+        cardcaseId:
+          type: string
+  GroupUpdate:
+    name: body
+    in: body
+    required: true
+    description: The Group
+    schema:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+  GroupMemberUpdate:
+    name: body
+    in: body
+    required: true
+    description: The GroupMember
+    schema:
+      type: object
+      properties:
+        id:
+          type: string
+        cardId:
+          type: string
+        hidden:
+          type: boolean
+      required:
+        - id
+  AccessRequestCreate:
+    name: body
+    in: body
+    required: true
+    description: The AccessRequest
+    schema:
+      type: object
+      properties:
+        toNamecardId:
+          type: string
+        fromNamecardId:
+          type: string

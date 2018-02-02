@@ -1,0 +1,86 @@
+{
+    "err_namecardCountExceedsLimit": {
+        "error": 80001,
+        "message": "Namecard count exceeds the limit"
+    },
+
+    "err_invalidCardType": {
+        "error": 80002,
+        "message": "Invalid card type"
+    },
+
+    "err_namecardNotFound": {
+        "error": 80003,
+        "message": "Name card not found"
+    },
+
+    "err_invalideOperation": {
+        "error": 80004,
+        "message": "Invalide sign operation [accept | reject]"
+    },
+
+    "err_requestSignedAlready": {
+        "error": 80004,
+        "message": "The request was signed already"
+    },
+
+    "err_wxAuthenticateFail": {
+        "error": 80005,
+        "message": "Failed to authenticate with WX server"
+    },
+
+    "err_missingWxCodeInHeader": {
+        "error": 80006,
+        "message": "Missing WX login code in header"
+    },
+
+    "err_selfRequestNotAllowed": {
+        "error": 80007,
+        "message": "Self access request is not allowed"
+    },
+
+    "err_invalidItemType": {
+        "error": 80008,
+        "message": "Invalid item type, expect [GROUP,CARD]"
+    },
+
+    "err_itemObjectNotFound": {
+        "error": 80009,
+        "message": "Item object not found"
+    },
+
+    "err_cardcaseNotFound": {
+        "error": 80010,
+        "message": "Cardcase not found"
+    },
+    
+    "err_accessTokenUnavailable": {
+        "error": 80011,
+        "message": "WX access tokem is unavailable"
+    },
+
+    "err_invalidAvatarFormat": {
+        "error": 80012,
+        "message": "Invalid avatart image format, expect [JPEG, PNG]"
+    },
+
+    "err_alienUserForbidden": {
+        "error": 80013,
+        "message": "Need to join the group first"
+    },
+
+    "err_emptyNameNotAllowed": {
+        "error": 80014,
+        "message": "Empty group name is not allowed"
+    },
+
+    "err_databaseError": {
+        "error": 80080,
+        "message": "Database error"
+    },
+
+    "err_template": {
+        "error": 80000,
+        "message": "Error template"
+    }
+}

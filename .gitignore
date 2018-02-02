@@ -1,0 +1,11 @@
+.node-persist
+node_modules
+npm-debug.log
+wecard_dev.db
+/.eslintignore
+/.eslintrc
+/.npmignore
+launch.json
+settings.json
+/.vscode
+/package-lock.json

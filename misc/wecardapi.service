@@ -1,0 +1,13 @@
+[Unit]
+Description=Wecard API serice
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/env node /var/www/wecard-api/server.js
+Restart=always
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/var/www/wecard-api
+
+[Install]
+WantedBy=multi-user.target

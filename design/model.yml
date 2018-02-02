@@ -1,0 +1,37 @@
+User:
+  Id:
+  wxOpenId:
+    
+NameCard:
+  Id:
+  UserId:
+
+Group:
+  Id:
+
+GroupMember:
+  Id:
+  GroupId:
+  UserId:
+  NameCardId:
+
+Cardcase:
+  Id:
+  UserId:
+
+CardcaseItem:
+  Id:
+  CardcaseId:
+  NameCardId:
+
+Accessibility:
+  Id:
+  RequestUserId:
+  TargetUserId:
+  AccessLevel:
+    
+AccessRequest:    // No push 
+  Id:
+  RequestUserId:
+  TargetUserId:
+    

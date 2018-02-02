@@ -1,0 +1,61 @@
+{
+  "development": {
+    "host": "localhost",
+    "port": 443,
+    "ssl": {
+      "key": "config/certs/xxxx.key",
+      "cert": "config/certs/xxxx.crt",
+      "ca": "config/certs/ca.crt"
+    },
+    "appId": "your_app_id",
+    "appSecret": "your_app_secret",
+    "storage": {
+      "bucket": "qcloud_storage_bucket_name",
+      "appId": "qcloud_stroage_appid",
+      "secretId" : "qcloud_stroage_secret_id",
+      "secretKey": "qcloud_stroage_secret_key"
+    },
+    "tokenSecret": "token_secret",
+    "database": {
+      "options": {
+        "database": "wecard_dev.db",
+        "storage": "wecard_dev.db",
+        "username": "root",
+        "password": "db_password",
+        "dialect": "sqlite"
+      }
+    },
+    "mockWxAuth": true
+  },
+  "production": {
+    "host": "your.host.name",
+    "port": 443,
+    "ssl": {
+      "key": "config/certs/xxxx.key",
+      "cert": "config/certs/xxxx.crt",
+      "ca": "config/certs/ca.crt"
+    },
+    "appId": "your_app_id",
+    "appSecret": "your_app_secret",
+    "storage": {
+      "bucket": "qcloud_storage_bucket_name",
+      "appId": "qcloud_stroage_appid",
+      "secretId" : "qcloud_stroage_secret_id",
+      "secretKey": "qcloud_stroage_secret_key"
+    },
+    "tokenSecret": "token_secret",
+    "database": {
+      "options": {
+        "host": "localhost",
+        "port": 51556,
+        "database": "db_name",
+        "username": "db_username",
+        "password": "db_password",
+        "dialect": "mysql"
+      }
+    },
+    "china": {
+      "host": "host.name.for.china.environment"
+    }
+  }
+}
